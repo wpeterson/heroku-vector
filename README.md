@@ -67,6 +67,31 @@ NEWRELIC_API_KEY=222222222222222
 ```
 
 ## Defining Your Dyno Scalers
+The core configuration within Heroku Vector is defining a set of `Dyno Scalers` that monitor a type of Heroku dyno (like `web` or `worker` dynos).  The DynoScaler monitors the number of this type of dynos and the amount of traffic they are getting, by sampling data from the traffic source.  Heroku Vector provides a simple DSL for adding a Dyno Scaler:
+
+```ruby
+HerokuVector.configure do |config|
+  # App Settings go here
+
+  # Define a dyno scaler with:
+  config.add_dyno_scaler(DYNO_NAME, options={})
+
+  #...
+end
+```
+
+Each dyno scaler requires the name of the type of dyno (eg: `web`), and some options.
+
+### Options
+
+*  `min_value` - REQUIRED - Minimum amount of traffic per-dyno (scale down when traffic below)
+*  `max_vaue` - REQUIRED - Maximum amount of trafic per-dyno (scale up when traffic is above)
+*  `source` - REQUIRED - Traffic Data Source to sample, either a Ruby class or string class name. (eg: `HerokuVector::Source::NewRelic`)
+*  `period` - OPTIONAL - How often to sample the traffic source, in seconds, defaults to every 1 minute (60 sec)
+*  `min_dynos` - OPTIONAL - Minimum number of dynos to have running at all times, defaults to 2.
+*  `max_dynos` - OPTIONAL - Maximum number of dynos to run at any time, defaults to 10.
+*  `scale_up_by` - OPTIONAL - Number of dynos to scale up by, defaults to 1 at a time.
+*  `scale_down_by` - OPTIONAL - Number of dynos to scale down by, defaults to 1 at a time.
 
 ## Application Settings
 Settings can be configured via the `HerokuVector.config do {|config| }` API or as Environment variables or an environment file for sensitive values like API keys.  Here are the top-level application settings that can be changed:
