@@ -1,0 +1,69 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.heroku.com/apps/app_name/dyno-types
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip
+      User-Agent:
+      - heroku-rb/0.3.19
+      X-Ruby-Version:
+      - 2.1.2
+      X-Ruby-Platform:
+      - x86_64-darwin12.0
+      Authorization:
+      - Basic REAL_AUTH_GOES_HERE
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Sun, 07 Sep 2014 03:55:14 GMT
+      Etag:
+      - '"2066ae00e17dbce2b2a0a51ddcb99426"'
+      Last-Modified:
+      - Sun, 07 Sep 2014 03:54:22 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      Request-Id:
+      - c2abc0bf-d7e4-4840-b2c6-742038b43334
+      Server:
+      - nginx/1.4.7
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Ratelimit-Remaining:
+      - '2399'
+      X-Runtime:
+      - '0.050453792'
+      Content-Length:
+      - '207'
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAO7WC1QAA3yOPQ+CQAyG/0pzMx/iSOKmA3EyjsaYu6Niw9GDAwRj/O9C
+        ogEcnNq+yfs8PT2FtkUhORWxQL7DMdnu9slh07gWQbWcGgTsUUNNKeZUga8h
+        WoFfwY2y2zhTvMrWNONayhKdNlQKT7AscGB21uXohrtqJTfUPES8fnlzqyIO
+        OSPuL52T5QBYaJ0kVrarR28QastXysJvGDg1M6FaaKIfzQKa41T8XFNz9a9J
+        pobhjdqaGWIK5pTzGwAA//8DAJawUYVeAQAA
+    http_version: 
+  recorded_at: Sun, 07 Sep 2014 03:55:13 GMT
+recorded_with: VCR 2.9.2

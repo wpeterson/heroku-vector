@@ -1,0 +1,78 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://rpm.newrelic.com/accounts.xml
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/xml
+      X-Api-Key:
+      - api_key
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sun, 07 Sep 2014 06:28:44 GMT
+      Content-Type:
+      - application/xml; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      X-Newrelic-Api-Version:
+      - v1
+      Etag:
+      - '"6421a9efd042eb1f557d443b6010b3b9"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      X-Runtime:
+      - '0.016534'
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <accounts type="array">
+          <account>
+            <allow-rails-core>false</allow-rails-core>
+            <api-key>api_key</api-key>
+            <data-access-key>8fe689a3c6e5b099a28551733333c2acaeb2a80136c9357</data-access-key>
+            <id type="integer">231237</id>
+            <license-key>adb4b49abefe681dce6d228d764082f1b36c9357</license-key>
+            <name>polar-rails-staging Heroku</name>
+            <partner-external-identifier nil="true"></partner-external-identifier>
+            <phone-number nil="true"></phone-number>
+            <event-feed-uri>/account_feeds/8fe689a3c6e5b099a28551733333c2acaeb2a80136c9357/events.rss</event-feed-uri>
+            <primary-admin>
+              <email>cole.jeff.services@gmail.com</email>
+              <first-name nil="true"></first-name>
+              <last-name nil="true"></last-name>
+              <state>active</state>
+            </primary-admin>
+            <subscription>
+              <annual-renewal-on nil="true"></annual-renewal-on>
+              <expires-on nil="true"></expires-on>
+              <number-of-hosts>unlimited</number-of-hosts>
+              <starts-on>2013-11-02</starts-on>
+              <state>free</state>
+              <product-name>Standard</product-name>
+            </subscription>
+          </account>
+        </accounts>
+    http_version: 
+  recorded_at: Sun, 07 Sep 2014 06:28:43 GMT
+recorded_with: VCR 2.9.2

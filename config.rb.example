@@ -1,0 +1,28 @@
+# Example config.rb file
+# Copy this to config.rb and edit for your configuration
+
+HerokuVector.configure do |config|
+
+  # Scale 1 web dyno for each 300rpm of traffic
+  config.add_dyno_scaler('web', {
+    source:         HerokuVector::Source::NewRelic,
+    period:         60,
+    min_dynos:      1,
+    max_dynos:      10,
+    min_value:      100,
+    max_value:      300
+  })
+
+  # Scale up Sidekiq workers when there are 6 or more busy threads per worker
+  # Scale up two dynos at a time, but scale down 1 dyno at a time
+  config.add_dyno_scaler('worker', {
+    source:         HerokuVector::Source::Sidekiq,
+    period:         5,
+    min_dynos:      1,
+    max_dynos:      10,
+    min_value:      0.5,
+    max_value:      6,
+    scale_up_by:    2,
+    scale_down_by:  1
+  })
+end

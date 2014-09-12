@@ -1,0 +1,65 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.heroku.com/apps/app_name/ps/scale?qty=1&type=web
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip
+      User-Agent:
+      - heroku-rb/0.3.19
+      X-Ruby-Version:
+      - 2.1.2
+      X-Ruby-Platform:
+      - x86_64-darwin12.0
+      Authorization:
+      - Basic YOUR_AUTH_HERE==
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - text/html;charset=utf-8
+      Date:
+      - Sun, 07 Sep 2014 04:24:14 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global write write-protected
+      Request-Id:
+      - 034d545b-b3e7-4f69-a0bb-89d57630f6e4
+      Server:
+      - nginx/1.4.7
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Ratelimit-Remaining:
+      - '2399'
+      X-Runtime:
+      - '0.118657809'
+      X-Xss-Protection:
+      - 1; mode=block
+      Content-Length:
+      - '27'
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAO7dC1QAAzIEAAAA//8DALfv3IMBAAAA
+    http_version: 
+  recorded_at: Sun, 07 Sep 2014 04:24:13 GMT
+recorded_with: VCR 2.9.2

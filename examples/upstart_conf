@@ -1,0 +1,10 @@
+# Example Upstart config to run heroku_vector on Linux
+# eg: /etc/init/heroku-vector.conf
+
+respawn
+respawn limit 15 5
+
+start on runlevel [2345]
+stop on runlevel [06]
+
+exec /usr/local/bin/heroku_vector -c /path/to/your/config.rb -l /var/log/heroku_vector.log

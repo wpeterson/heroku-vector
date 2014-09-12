@@ -1,0 +1,75 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'bundler/setup'
+
+require 'dotenv'
+require 'optparse'
+
+options = {
+  :daemonize  => false,
+  :envfile    => File.expand_path( File.dirname(__FILE__)+'/../.env' ),
+  :config     => File.expand_path( File.dirname(__FILE__)+'/../config.rb' ),
+  :sample     => false
+}
+
+def show_usage_and_exit
+  puts @parser
+  exit
+end
+
+@parser = OptionParser.new do |opts|
+  opts.banner = <<EOL
+heroku_vector: auto-scale dynos on Heroku
+
+  Usage: heroku_vector [options]
+         heroku_vector -s
+
+EOL
+
+  opts.on('-s', '--sample', "Sample values and exit") {|v| options[:sample] = true }
+  opts.on('-d', '--daemonize', "Daemonize process") {|v| options[:daemonize] = true }
+  opts.on('-e', '--envfile PATH', "Environment file (default: .env)") {|v| options[:envfile] = v }
+  opts.on('-c', '--config PATH', "Config file (default: config.rb)") {|v| options[:config] = v }
+  opts.on('-p', '--pidfile PATH', "Daemon pid file (default: heroku_vector.pid)") {|v| options[:pidfile] = v }
+  opts.on('-x', '--loglevel LEVEL', "Logging level [fatal/warn/info/debug] (default is info)") {|v| options[:loglevel] = v }
+  opts.on('-l', '--logfile PATH', "Logfile path for daemon") {|v| options[:logfile] = v }
+  opts.on_tail("-h", "--help", "Show this message") { show_usage_and_exit }
+end
+@parser.parse!(ARGV)
+
+if options[:envfile] && File.exist?(options[:envfile])
+  env = Dotenv.load(options[:envfile])
+end
+
+# Write a default pidfile when daemonized
+if options[:daemonize]
+  options[:pidfile] ||= File.expand_path( File.dirname(__FILE__)+'/../heroku_vector.pid' )
+  options[:logfile] ||= File.expand_path( File.dirname(__FILE__)+'/../heroku_vector.log' )
+end
+
+puts "heroku_vector: #{options.inspect}"
+
+# Load heroku_vector after all options parses and environment loaded
+require 'heroku_vector'
+
+if options[:loglevel]
+  level = Logger.const_get(options[:loglevel].upcase) rescue nil
+  HerokuVector.logger.level = level if level
+end
+
+if options[:sample]
+  # Print out a sample value for each valid Source class
+  HerokuVector::Source.constants.each do |constant|
+    clazz = HerokuVector::Source.const_get(constant)
+    next unless clazz.class == Class
+
+    source = clazz.new
+    puts "#{clazz}: #{source.sample} #{source.unit}"
+  end
+
+  exit 0
+end
+
+manager = HerokuVector::ProcessManager.new(options)
+manager.start
