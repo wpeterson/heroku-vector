@@ -1,5 +1,19 @@
 # Heroku Vector
 
+```bash
+  ___ ___                           __                  
+ /   |   \   ____  _______   ____  |  | __ __ __        
+/    ~    \_/ __ \ \_  __ \ /  _ \ |  |/ /|  |  \       
+\    Y    /\  ___/  |  | \/(  <_> )|    < |  |  /       
+ \___|_  /  \___  > |__|    \____/ |__|_ \|____/        
+      ____   ____/                 __   \/              
+      \   \ /   /  ____    ____  _/  |_   ____  _______ 
+       \   Y   / _/ __ \ _/ ___\ \   __\ /  _ \ \_  __ \
+        \     /  \  ___/ \  \___  |  |  (  <_> ) |  | \/
+         \___/    \___  > \___  > |__|   \____/  |__|   
+                      \/      \/                        
+```
+
 Simple, linear auto scaling for Heroku dynos.
 
 Heroku Vector runs as a multi-threaded process that samples production metrics and linearly scales Heroku dynos up or down as they change.
