@@ -87,6 +87,7 @@ heroku_vector: auto-scale dynos on Heroku
 Once you've configured your API keys and host names, try taking a sample from all your sources:
 
 ```bash
+$> heroku_vector -s
 heroku_vector: {:daemonize=>false, :envfile=>"/Users/wpeterson/src/heroku-vector/.env", :config=>"/Users/wpeterson/src/heroku-vector/config.rb", :sample=>true}
 HerokuVector::Source::NewRelic: 8490.0 RPM
 HerokuVector::Source::Sidekiq: 23 busy threads
