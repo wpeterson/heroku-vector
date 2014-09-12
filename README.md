@@ -101,6 +101,8 @@ If you're debugging a problem, you can turn on verbose logging by setting the `d
 
 ## Architecture
 
+![Architecture](https://dl.dropboxusercontent.com/s/a133uy8e0ohwp9t/Architecture.png?dl=0)
+
 The auto-scaler runs as a single process, either interactively or as a daemon (`ProcessManager`).  Within that process, the `Worker` spawn an EventMachine event loop and runs each `DynoScaler` in it's own thread.  Periodically, each `DynoScaler` will sample data and evaluate the scale of your dynos.  When the scale of your dynos doesn't match your traffic, the `DynoScaler` will use the Heroku API to scale your dynos up or down.
 
 ## Adding a new Source
