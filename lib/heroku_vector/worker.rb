@@ -15,11 +15,14 @@ module HerokuVector
       if options[:config]
         if File.exist?(options[:config])
           logger.info "Loading config from '#{options[:config]}'"
+          load options[:config]
         else
-          logger.warn "No config found at '#{options[:config]}'"
+          logger.fatal "No config found at '#{options[:config]}'"
+          logger.info "You can copy config.rb.example => config.rb to get started"
+          logger.info "OR run heroku_vector -c /path/to/your/config.rb"
+          logger.info "Just Starting? Test your Source config with sampler mode: heroku_vector -s"
+          exit 1
         end
-
-        load options[:config]
       end
 
       load_dyno_scalers
