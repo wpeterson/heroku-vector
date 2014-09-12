@@ -66,6 +66,41 @@ SIDEKIQ_REDIS_NAMESPACE=sidekiq
 NEWRELIC_API_KEY=222222222222222
 ```
 
+## Defining Your Dyno Scalers
+
+## Application Settings
+Settings can be configured via the `HerokuVector.config do {|config| }` API or as Environment variables or an environment file for sensitive values like API keys.  Here are the top-level application settings that can be changed:
+
+*  `config.logger` - Ruby Logger instance, defaults to a built-in logger wrapping `STDOUT`
+*  `config.engine` - Scaling Engine to use, defaults to Heroku API scaler
+*  `config.min_scale_time_secs` - Minimum scaling rate-limit (only scale up/down this often), defaults to 5 mins (300sec).  Rate limit is per-Dyno Scaler, so web and worker dynos have their own rate limits.
+
+## Sources and Config
+Heroku Vector is designed to have a modular system for pulling traffic data from a variety of sources.  The current sources are listed below, with any settings they need:
+
+### NewRelic
+
+    Minimum Period: 60sec
+    Unit: Requests per Minute (RPM)
+    Default Sample Size: Last 5 Minutes (300 samples)
+
+This data source pulls the Throughput in Request per Minute (RPM) from the NewRelic API for the last minute of data.  NewRelic metrics tend to lag 3-5 minutes behind realtime.
+
+* `config.newrelic_api_key` / `ENV['NEWRELIC_API_KEY']` - REQUIRED - Secret API Key for your newrelic account.
+* `config.newrelic_account_id` / `ENV['NEWRELIC_ACCOUNT_ID']` - OPTIONAL - ID of NewRelic Account to pull from, defaults to first account.
+* `config.newrelic_app_id` / `ENV['NEWRELIC_APP_ID']` - OPTIONAL - ID of NewRelic Application to pull from, defaults to first Application in the account.
+
+### Sidekiq
+
+    Minimum Period: 1sec
+    Unit: # busy threads
+    Default Sample Size: Last 2 Minutes (120 samples)
+
+This data source samples the realtime number of busy worker threads in a sidekiq cluster, using the Sidekiq data API.  This value can be sampled continuously.
+
+* `config.sidekiq_redis_url` / `ENV['REDIS_URL']` - OPTIONAL - URL for Redis backing Sidekiq cluster, defaults to `localhost` on `6379`
+* `config.sidekiq_redis_namespace` / `ENV['SIDEKIQ_REDIS_NAMESPACE']` - OPTIONAL - Redis namespace for Sidekiq cluster, default is no namespace used.
+
 ## heroku_vector daemon:
 ```bash
 [master ~/src/heroku-vector]$> ./bin/heroku_vector --help
