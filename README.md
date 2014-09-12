@@ -52,6 +52,53 @@ SIDEKIQ_REDIS_NAMESPACE=sidekiq
 NEWRELIC_API_KEY=222222222222222
 ```
 
+## heroku_vector daemon:
+```bash
+[master ~/src/heroku-vector]$> ./bin/heroku_vector --help
+heroku_vector: auto-scale dynos on Heroku
+
+  Usage: heroku_vector [options]
+         heroku_vector -s
+
+    -s, --sample                     Sample values and exit
+    -d, --daemonize                  Daemonize process
+    -e, --envfile PATH               Environment file (default: .env)
+    -c, --config PATH                Config file (default: config.rb)
+    -p, --pidfile PATH               Daemon pid file (default: heroku_vector.pid)
+    -x, --loglevel LEVEL             Logging level [fatal/warn/info/debug] (default is info)
+    -l, --logfile PATH               Logfile path for daemon
+    -h, --help                       Show this message
+```
+
+Once you've configured your API keys and host names, try taking a sample from all your sources:
+
+```bash
+heroku_vector: {:daemonize=>false, :envfile=>"/Users/wpeterson/src/heroku-vector/.env", :config=>"/Users/wpeterson/src/heroku-vector/config.rb", :sample=>true}
+HerokuVector::Source::NewRelic: 8490.0 RPM
+HerokuVector::Source::Sidekiq: 23 busy threads
+```
+
+## Logging and Debugging
+
+Heroku Vector logs either to `STDOUT` or a logfile with useful information about state changes and scaling events.
+
+```bash
+2014-09-12T16:05:48.473Z INFO: Loading config from '/home/ubuntu/polar-auto-scale/config.rb'
+2014-09-12T16:05:48.474Z INFO: Loading Scaler: web, {:source=>HerokuVector::Source::NewRelic, :period=>60, :min_dynos=>1, :max_dynos=>4, :min_value=>1000, :max_value=>3000}
+2014-09-12T16:05:48.474Z INFO: Loading Scaler: worker, {:source=>HerokuVector::Source::Sidekiq, :period=>5, :min_dynos=>1, :max_dynos=>10, :min_value=>0.5, :max_value=>3, :scale_up_by=>3, :scale_down_by=>1}
+2014-09-12T16:45:01.742Z INFO: Heroku.scale_dynos(worker, 4)
+2014-09-12T16:50:03.164Z INFO: worker: 4 dynos - 0.4 busy threads below 2.0 - scaling down
+2014-09-12T16:50:03.247Z INFO: Heroku.scale_dynos(worker, 3)
+2014-09-12T16:55:04.559Z INFO: worker: 3 dynos - 0.2 busy threads below 1.5 - scaling down
+2014-09-12T16:55:04.646Z INFO: Heroku.scale_dynos(worker, 2)
+2014-09-12T17:00:08.391Z INFO: worker: 2 dynos - 0.9 busy threads below 1.0 - scaling down
+2014-09-12T17:00:08.492Z INFO: Heroku.scale_dynos(worker, 1)
+```
+
+If you're debugging a problem, you can turn on verbose logging by setting the `debug` log level:
+
+    $ heroku_vector -x debug
+
 ## Architecture
 
 The auto-scaler runs as a single process, either interactively or as a daemon (`ProcessManager`).  Within that process, the `Worker` spawn an EventMachine event loop and runs each `DynoScaler` in it's own thread.  Periodically, each `DynoScaler` will sample data and evaluate the scale of your dynos.  When the scale of your dynos doesn't match your traffic, the `DynoScaler` will use the Heroku API to scale your dynos up or down.
