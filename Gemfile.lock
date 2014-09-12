@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    heroku-vector (0.0.1)
+    heroku-vector (0.0.2)
       activeresource
       dotenv
       eventmachine
