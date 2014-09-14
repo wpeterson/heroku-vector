@@ -1,0 +1,1 @@
+rvm use ruby-2.1.2@heroku-vector --create
