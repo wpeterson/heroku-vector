@@ -1,4 +1,5 @@
 # Heroku Vector
+![Build Status](https://travis-ci.org/wpeterson/heroku-vector.svg?branch=master)
 
 ```bash
   ___ ___                           __                  
@@ -222,6 +223,7 @@ HerokuVector.configure do |config|
 * Your Name Could Go Here
 
 ## Contributing
+![Build Status](https://travis-ci.org/wpeterson/heroku-vector.svg?branch=master)
 
 1. Fork it
 2. Bundle Install (`bundle install`)
