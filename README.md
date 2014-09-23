@@ -25,7 +25,7 @@ Web Dynos can be scaled using the amount of traffic (RPM) from NewRelic.  Sideki
 
 Install this gem:
 
-    $ gem install heroku_vector
+    $ gem install heroku-vector
 
 And then run the scaler proces:
 
