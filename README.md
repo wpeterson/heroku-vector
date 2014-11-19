@@ -23,6 +23,19 @@ Web Dynos can be scaled using the amount of traffic (RPM) from NewRelic.  Sideki
 
 ## Installation
 
+
+### Add to Rails app on Heroku, running in a Heroku Dyno:
+Add to Gemfile:
+
+    gem "heroku-vector"
+
+Add to Procfile:
+
+    vector: heroku_vector -c config/heroku_vector.rb
+
+Setup auto-scaling config in `config/heroku_vector.rb`
+
+### Install on a stand-alone system
 Install this gem:
 
     $ gem install heroku-vector
