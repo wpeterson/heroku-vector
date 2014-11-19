@@ -1,0 +1,9 @@
+# Example Heroku Procfile
+# Assumes you are running a Rails app web dyno
+# You need to install the heroku_vector gem in your app, and
+# setup a config file, like ./config/heroku_vector.rb
+#
+# This will run the Heroku Vector auto-scaling process inside a separate Heroku dyno from your app
+
+web: bundle exec rails server -p $PORT
+vector: heroku_vector -c config/heroku_vector.rb
