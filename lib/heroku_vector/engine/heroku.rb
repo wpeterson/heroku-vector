@@ -20,13 +20,11 @@ module HerokuVector::Engine
         return @dynos_by_name.data
       end
 
-      @dynos_by_name = begin
-        expires_at = Time.now + 60 # 1 min from now
-        CacheEntry.new(get_dynos_by_name, expires_at)
-      rescue
-        nil
-      end
-      @dynos_by_name.data
+      expires_at = Time.now + 60 # 1 min from now
+      dynos_by_name = get_dynos_by_name rescue {}
+      @dynos_by_name = CacheEntry.new(dynos_by_name, expires_at)
+
+      dynos_by_name
     end
 
     def get_dynos_by_name
