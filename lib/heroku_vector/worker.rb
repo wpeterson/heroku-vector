@@ -12,6 +12,8 @@ module HerokuVector
     end
 
     def run
+      validate_environment
+
       if options[:config]
         if File.exist?(options[:config])
           logger.info "Loading config from '#{options[:config]}'"
@@ -42,6 +44,13 @@ module HerokuVector
         logger.info "Loading Scaler: #{name}, #{options.inspect}"
 
         @dyno_scalers << DynoScaler.new(name, options)
+      end
+    end
+
+    def validate_environment
+      raise "Heroku API: HEROKU_API_KEY not set!" unless ENV['HEROKU_API_KEY']
+      unless HerokuVector.heroku_app_name
+        raise "Heroku API: app name not configured!  Set HEROKU_APP_NAME or config."
       end
     end
 
